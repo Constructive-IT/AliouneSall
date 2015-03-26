@@ -4,14 +4,14 @@
 
             <div class="range range-dark">
                 <i class="icon ion-play" ng-click="toggleState()" ng-class="{'ion-play': state.status === enums.state.ready, 'ion-pause': state.status === enums.state.playing}"></i>
-                {{ getDuration((audio.filter.sourcePosition || 0) / (audio.buffer.sampleRate || 1)) | date: 'mm:ss' }}
+                {{ getDuration((player.filter.sourcePosition || 0) / (player.buffer.sampleRate || 1)) | date: 'mm:ss' }}
                 <input type="range" name="progress" ng-model="state.progress" min="0" max="{{state.duration}}" step="0.01" ng-change="seekTo(state.progress)" />
                 {{ getDuration(state.duration) | date: 'mm:ss' }}
-                <i class="icon ion-stop" ng-click="stopPlaying()"></i>
+                <i class="icon ion-stop" ng-click="stop()"></i>
             </div>
             <div class="range range-assertive">
                 <i class="icon ion-volume-low"></i>
-                <input type="range" name="volume" ng-model="audio.gainNode.gain.value" min="0" max="1" step="0.05" />
+                <input type="range" name="volume" ng-model="player.gainNode.gain.value" min="0" max="1" step="0.05" />
                 <i class="icon ion-volume-high"></i>
             </div>
 
@@ -22,7 +22,7 @@
             </div>
             
             <span ng-repeat="song in songs">
-                <li class="item" ng-value="song" ng-click="play('{{song.link}}')">
+                <li class="item" ng-value="song" ng-click="play('{{song.tracks[0].url}}')">
                     {{song.name+' ('+song.band+')'}}
                 </li>
             </span>

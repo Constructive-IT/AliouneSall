@@ -99,15 +99,15 @@
                 tracks: [
                     {
                         name: 'guitar',
-                        url: '//cbateman.com/demos/AudioTrackr/files/whiteknuckles/guitar.mp3'
+                        url: 'http://cbateman.com/demos/AudioTrackr/files/whiteknuckles/guitar.mp3'
                     },
                     {
                         name: 'bass',
-                        url: '//s1.cbateman.com/demos/AudioTrackr/files/whiteknuckles/bass1.mp3'
+                        url: 'http://s1.cbateman.com/demos/AudioTrackr/files/whiteknuckles/bass1.mp3'
                     },
                     {
                         name: 'synths',
-                        url: '//s2.cbateman.com/demos/AudioTrackr/files/whiteknuckles/synths.mp3'
+                        url: 'http://s2.cbateman.com/demos/AudioTrackr/files/whiteknuckles/synths.mp3'
                     },
                     {
                         name: 'vocals',

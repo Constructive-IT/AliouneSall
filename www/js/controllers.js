@@ -63,39 +63,43 @@ angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', '
 })
 
 .controller('PlaylistCtrl', function ($scope, $stateParams, $localstorage, songFactory, enums) {
-    $scope.param = $stateParams.playlistId;
-    $scope.sujet = $stateParams.sujet;
-
-
-
-
+   
     angular.extend($scope, {
         enums: enums,
         songs: songFactory,
-        audio: new Audio(),
+        player: new Audio(),
+        status: enums.state.init,
+        param: $stateParams.playlistId,
+        sujet: $stateParams.sujet,
         currentSong: ""
     });
 
     function setPlayStatus(status) {
-        return $scope.state.status === status;
+        return $scope.status === status;
     };
 
-    function play(song) {
-
-        $scope.audio.src = song;
-        $scope.audio.play();
+    $scope.play = function (song) {
+        $scope.player.src = song;
+        $scope.player.play();
 
         setPlayStatus(enums.state.playing);
     };
 
-    function pause(song) {
+    $scope.pause = function () {
+        if ($scope.status === enums.state.playing) {
 
-        setPlayStatus(enums.state.paused);
+            $scope.player.pause();
+            setPlayStatus(enums.state.paused);
+        }
     };
 
-    function stop(song) {
-        return $scope.state.status === enums.state.playing;
+    $scope.stop = function () {
+        if ($scope.state.status === enums.state.playing) {
 
-        setPlayStatus(enums.state.stopped);
+            $scope.player.pause();
+            $scope.player.currentTime = 0;
+
+            setPlayStatus(enums.state.stopped);
+        }      
     };
 });
