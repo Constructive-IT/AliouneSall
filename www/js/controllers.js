@@ -1,20 +1,5 @@
-angular.module('starter.controllers', [])
-.factory('$localstorage', ['$window', function ($window) {
-    return {
-        set: function (key, value) {
-            $window.localStorage[key] = value;
-        },
-        get: function (key, defaultValue) {
-            return $window.localStorage[key] || defaultValue;
-        },
-        setObject: function (key, value) {
-            $window.localStorage[key] = JSON.stringify(value);
-        },
-        getObject: function (key) {
-            return JSON.parse($window.localStorage[key] || '{}');
-        }
-    }
-}])
+angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', 'aliounesall.factories', 'aliounesall.directives', 'aliounesall.modules'])
+
 .controller('AppCtrl', function ($scope, $ionicModal, $timeout, $localstorage) {
 
     var wfObj = [
@@ -28,7 +13,7 @@ angular.module('starter.controllers', [])
 
     $localstorage.setObject("WaktaanuFajar", wfObj);
 
-
+    
   // Form data for the login modal
   $scope.loginData = {};
 
@@ -66,13 +51,51 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function ($scope, $stateParams, $localstorage) {
+.controller('PlaylistsCtrl', function ($scope, $stateParams, $localstorage, songFactory, enums) {
     $scope.sujet = $stateParams.sujet;
 
     $scope.playlists = $scope.getPlaylist($scope.sujet);
+
+
+
+
+
 })
 
-.controller('PlaylistCtrl', function ($scope, $stateParams) {
+.controller('PlaylistCtrl', function ($scope, $stateParams, $localstorage, songFactory, enums) {
     $scope.param = $stateParams.playlistId;
     $scope.sujet = $stateParams.sujet;
+
+
+
+
+    angular.extend($scope, {
+        enums: enums,
+        songs: songFactory,
+        audio: new Audio(),
+        currentSong: ""
+    });
+
+    function setPlayStatus(status) {
+        return $scope.state.status === status;
+    };
+
+    function play(song) {
+
+        $scope.audio.src = song;
+        $scope.audio.play();
+
+        setPlayStatus(enums.state.playing);
+    };
+
+    function pause(song) {
+
+        setPlayStatus(enums.state.paused);
+    };
+
+    function stop(song) {
+        return $scope.state.status === enums.state.playing;
+
+        setPlayStatus(enums.state.stopped);
+    };
 });
