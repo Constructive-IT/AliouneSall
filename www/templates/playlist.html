@@ -3,15 +3,18 @@
         <div class="list">
 
             <div class="range range-dark">
-                <i class="icon ion-play" ng-click="toggleState()" ng-class="{'ion-play': state.status === enums.state.ready, 'ion-pause': state.status === enums.state.playing}"></i>
-                {{ getDuration((player.filter.sourcePosition || 0) / (player.buffer.sampleRate || 1)) | date: 'mm:ss' }}
-                <input type="range" name="progress" ng-model="state.progress" min="0" max="{{state.duration}}" step="0.01" ng-change="seekTo(state.progress)" />
-                {{ getDuration(state.duration) | date: 'mm:ss' }}
+                <i class="icon" ng-click="playPause()" ng-class="{'ion-play': status != enums.state.playing, 'ion-pause': status === enums.state.playing}"></i>
+                {{(getDuration(data.currentTime) | date: 'HH:mm:ss') || ''}}  
+                
+                <input type="range" min="0" ng-model="data.currentTime" ng-change="seeked();" step="0.01" max="{{data.duration}}" value="{{data.currentTime}}">
+                
+
+                {{ (getDuration(data.duration) | date: 'HH:mm:ss')|| '' }}
                 <i class="icon ion-stop" ng-click="stop()"></i>
             </div>
             <div class="range range-assertive">
                 <i class="icon ion-volume-low"></i>
-                <input type="range" name="volume" ng-model="player.gainNode.gain.value" min="0" max="1" step="0.05" />
+                <input type="range" name="volume" ng-model="volume" min="0" max="1" step="0.05" ng-change="setVolume(volume)" />
                 <i class="icon ion-volume-high"></i>
             </div>
 

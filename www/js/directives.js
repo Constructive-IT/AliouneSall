@@ -1,27 +1,27 @@
 ﻿angular.module('aliounesall.directives', [])
-.directive('fileInput', function ($parse) {
-    return {
-        restrict: "EA",
-        template: "<input type='file' ng-transclude />",
-        replace: true,
-        transclude: true,
-        link: function (scope, element, attrs) {
+    .directive('fileInput', function($parse) {
+        return {
+            restrict: "EA",
+            template: "<input type='file' ng-transclude />",
+            replace: true,
+            transclude: true,
+            link: function(scope, element, attrs) {
 
-            var modelGet = $parse(attrs.fileInput);
-            var modelSet = modelGet.assign;
-            var onChange = $parse(attrs.onChange);
+                var modelGet = $parse(attrs.fileInput);
+                var modelSet = modelGet.assign;
+                var onChange = $parse(attrs.onChange);
 
-            var updateModel = function () {
-                scope.$apply(function () {
-                    modelSet(scope.$parent, element[0].files[0]);
-                    onChange(scope.$parent);
-                });
-            };
+                var updateModel = function() {
+                    scope.$apply(function() {
+                        modelSet(scope.$parent, element[0].files[0]);
+                        onChange(scope.$parent);
+                    });
+                };
 
-            element.bind('change', updateModel);
-        }
-    };
-})
+                element.bind('change', updateModel);
+            }
+        };
+    })
 
 .directive('trackProgress', function ($parse) {
     return {

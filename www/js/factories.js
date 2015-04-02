@@ -1,14 +1,12 @@
 ﻿angular.module('aliounesall.factories', [])
-    .factory('audioContext', function($window) {
+    .factory('audioContext', function ($window) {
         var contextClass =
-            $window.webkitAudioContext ||
-                $window.mozAudioContext ||
-                $window.oAudioContext ||
-                $window.msAudioContext;
+          $window.AudioContext ||
+          $window.mozAudioContext ||
+          $window.oAudioContext ||
+          $window.msAudioContext;
 
-        var context = new webkitAudioContext();
-
-        return context;
+        return contextClass;
     })
     .factory('$localstorage', [
         '$window', function($window) {
@@ -28,6 +26,7 @@
             }
         }
     ])
+
     .factory('songFactory', function() {
         return [
             {
