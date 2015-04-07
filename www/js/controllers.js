@@ -62,112 +62,111 @@ angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', '
 
 })
 
-.controller('PlaylistCtrl', function ($scope, $stateParams, $localstorage, $ionicLoading, $timeout, songFactory, enums) {
+.controller('PlaylistCtrl', function ($scope, $stateParams, $localstorage, $ionicLoading, $timeout, $rootScope, songFactory, enums) {
 
     angular.extend($scope, {
         enums: enums,
         songs: songFactory,
-        player: new Audio(),
-        status: enums.state.init,
         param: $stateParams.playlistId,
         sujet: $stateParams.sujet,
-        volume: 0.5,
-        data: { currentTime: 0, duration: 0, },
         currentSong: "",
-        getDuration: function (val) {
-            return new Date(0, 0, 0, 0, 0, val);
-        }
     });
-
-    setPlayStatus(enums.state.ready);
-
-    $scope.playPause = function() {
-        if ($scope.status == enums.state.playing || $scope.status == enums.state.paused) {
-            if (this.player.paused) {
-                this.player.play();
-                setPlayStatus(enums.state.playing);
-            } else {
-                this.player.pause();
-                setPlayStatus(enums.state.paused);
-            }
-        }
-    };
-
-    //triggered by ngChange to update audio.currentTime
-    $scope.seeked = function () {
-        $scope.player.currentTime = this.data.currentTime;
-    };
-
-    $scope.updateUI = function (seek, max) {
-        $scope.data.duration = max;
-        $scope.data.currentTime = seek;
-    };
-
-    $scope.player.ontimeupdate = function (t) {
-        if ($scope.status === enums.state.playing) {
-
-            var seek = $scope.player.currentTime;
-           var max =  $scope.player.duration;
-
-            //did a little change here by using $timeout         
-            $timeout(function () {
-                $scope.updateUI(seek, max);
-            }, 0);
-
-          
-        }
-    };
-
-    $scope.player.oncanplay = function (e) {
-        $ionicLoading.hide();
-    };
-
-    $scope.player.onerror = function () {
-        $ionicLoading.hide();
-        $ionicLoading.show({
-            template: "Error! Something went wrong",
-            duration: 1000
-        });
-        setPlayStatus(enums.state.stopped);
-    };
-
-
-
-    function setPlayStatus(status) {
-        return $scope.status = status;
-    };
-
-    $scope.setVolume = function (value) {
-        $scope.player.volume = value;
-    };
 
 
     $scope.play = function (song) {
-        $ionicLoading.show({
-            template: "Loading..."
-        });
+        $rootScope.$emit("audio.play", song);
 
-        $scope.player.src = song;
-        $scope.player.play();
+    };
+
+    //setPlayStatus(enums.state.ready);
+
+    //$scope.playPause = function() {
+    //    if ($scope.status == enums.state.playing || $scope.status == enums.state.paused) {
+    //        if (this.player.paused) {
+    //            this.player.play();
+    //            setPlayStatus(enums.state.playing);
+    //        } else {
+    //            this.player.pause();
+    //            setPlayStatus(enums.state.paused);
+    //        }
+    //    }
+    //};
+
+    ////triggered by ngChange to update audio.currentTime
+    //$scope.seeked = function () {
+    //    $scope.player.currentTime = this.data.currentTime;
+    //};
+
+    //$scope.updateUI = function (seek, max) {
+    //    $scope.data.duration = max;
+    //    $scope.data.currentTime = seek;
+    //};
+
+    //$scope.player.ontimeupdate = function (t) {
+    //    if ($scope.status === enums.state.playing) {
+
+    //        var seek = $scope.player.currentTime;
+    //       var max =  $scope.player.duration;
+
+    //        //did a little change here by using $timeout         
+    //        $timeout(function () {
+    //            $scope.updateUI(seek, max);
+    //        }, 0);
+
+          
+    //    }
+    //};
+
+    //$scope.player.oncanplay = function (e) {
+    //    $ionicLoading.hide();
+    //};
+
+    //$scope.player.onerror = function () {
+    //    $ionicLoading.hide();
+    //    $ionicLoading.show({
+    //        template: "Error! Something went wrong",
+    //        duration: 1000
+    //    });
+    //    setPlayStatus(enums.state.stopped);
+    //};
+
+
+
+    //function setPlayStatus(status) {
+    //    return $scope.status = status;
+    //};
+
+    //$scope.setVolume = function (value) {
+    //    $scope.player.volume = value;
+    //};
+
+
+    //$scope.play = function (song) {
+    //    $ionicLoading.show({
+    //        template: "Loading..."
+    //    });
+
+    //    $scope.player.src = song;
+    //    $scope.player.play();
         
-        setPlayStatus(enums.state.playing);
-    };
+    //    setPlayStatus(enums.state.playing);
+    //};
 
-    $scope.pause = function () {
-        if ($scope.status === enums.state.playing) {
+    //$scope.pause = function () {
+    //    if ($scope.status === enums.state.playing) {
 
-            $scope.player.pause();
-            setPlayStatus(enums.state.paused);
-        }
-    };
+    //        $scope.player.pause();
+    //        setPlayStatus(enums.state.paused);
+    //    }
+    //};
 
-    $scope.stop = function () {
-        if ($scope.status === enums.state.playing) {
+    //$scope.stop = function () {
+    //    if ($scope.status === enums.state.playing) {
 
-            $scope.player.pause();
-            $scope.player.currentTime = 0;
-            $scope.data.currentTime = 0;
-            setPlayStatus(enums.state.stopped);
-        }      
-    };
+    //        $scope.player.pause();
+    //        $scope.player.currentTime = 0;
+    //        $scope.data.currentTime = 0;
+    //        setPlayStatus(enums.state.stopped);
+    //    }      
+    //};
 });

@@ -1,0 +1,28 @@
+<div class="tabs" >
+    <div class="bar bar-subfooter">
+        <div class="range range-calm button-clear">
+            <input type="range" class="range" name="progress" ng-model="audio.currentTime" min="0" max="{{audio.duration}}" step="0.01" ng-change="seeked()" />
+        </div>
+    </div>
+
+    <div class="bar bar-footer ">
+        <a class="button button-clear button-positive">
+            {{ getDuration(audio.currentTime)| date: 'HH:mm:ss' }}
+        </a>
+        <div class="button-bar button-clear">
+
+            <a class="button button-icon icon ion-skip-backward" ng-click="prev()"></a>
+
+            <a class="button button-icon icon ion-play" ng-click="playPause()" ng-class="{'ion-play': status != 2, 'ion-pause': status === 2}"></a>
+
+            <a class="button button-icon icon ion-skip-forward" ng-click="next()"></a>
+
+        </div>
+        <a class="button button-clear button-positive">
+            {{ getDuration(audio.duration) | date: 'HH:mm:ss' }}
+        </a>
+    </div>
+
+
+</div>
+

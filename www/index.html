@@ -25,9 +25,11 @@
         <script src="js/directives.js"></script>
         <script src="js/factories.js"></script>
         <script src="js/services.js"></script>
+        <script src="components/audioPlayer/component.js"></script>
     </head>
 
     <body ng-app="aliounesall">
         <ion-nav-view></ion-nav-view>
+        <audio-player has-volume="true" ng-show="status===enums.status.playing"></audio-player>
     </body>
 </html>

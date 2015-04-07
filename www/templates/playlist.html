@@ -2,22 +2,24 @@
     <ion-content>
         <div class="list">
 
-            <div class="range range-dark">
-                <i class="icon" ng-click="playPause()" ng-class="{'ion-play': status != enums.state.playing, 'ion-pause': status === enums.state.playing}"></i>
-                {{(getDuration(data.currentTime) | date: 'HH:mm:ss') || ''}}  
+            <!--<div class="range range-dark">
+                    <i class="icon" ng-click="playPause()" ng-class="{'ion-play': status != enums.state.playing, 'ion-pause': status === enums.state.playing}"></i>
+                    {{(getDuration(data.currentTime) | date: 'HH:mm:ss') || ''}}  
                 
-                <input type="range" min="0" ng-model="data.currentTime" ng-change="seeked();" step="0.01" max="{{data.duration}}" value="{{data.currentTime}}">
+                    <input type="range" min="0" ng-model="data.currentTime" ng-change="seeked();" step="0.01" max="{{data.duration}}" value="{{data.currentTime}}">
                 
 
-                {{ (getDuration(data.duration) | date: 'HH:mm:ss')|| '' }}
-                <i class="icon ion-stop" ng-click="stop()"></i>
-            </div>
-            <div class="range range-assertive">
-                <i class="icon ion-volume-low"></i>
-                <input type="range" name="volume" ng-model="volume" min="0" max="1" step="0.05" ng-change="setVolume(volume)" />
-                <i class="icon ion-volume-high"></i>
-            </div>
-
+                    {{ (getDuration(data.duration) | date: 'HH:mm:ss')|| '' }}
+                    <i class="icon ion-stop" ng-click="stop()"></i>
+                </div>
+                <div class="range range-assertive">
+                    <i class="icon ion-volume-low"></i>
+                    <input type="range" name="volume" ng-model="volume" min="0" max="1" step="0.05" ng-change="setVolume(volume)" />
+                    <i class="icon ion-volume-high"></i>
+                </div>-->
+            
+            
+            
 
 
             <div class="item item-divider">
@@ -25,12 +27,25 @@
             </div>
             
             <span ng-repeat="song in songs">
-                <li class="item" ng-value="song" ng-click="play('{{song.tracks[0].url}}')">
+                
+                <label class="item item-radio" ng-value="song" ng-click="play('{{song.tracks[0].url}}')">
+                    <input type="radio" name="group">
+                    <div class="item-content">
+                        {{song.name+' ('+song.band+')'}}
+                    </div>
+                    <i class="radio-icon ion-checkmark"></i>
+                </label>
+                
+
+                
+
+                <!--<li class="item" ng-value="song" ng-click="play('{{song.tracks[0].url}}')">
                     {{song.name+' ('+song.band+')'}}
-                </li>
+                </li>-->
             </span>
 
         </div>
 
     </ion-content>
+    
 </ion-view>
