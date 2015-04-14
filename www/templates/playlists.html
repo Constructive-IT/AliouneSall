@@ -1,8 +1,13 @@
 <ion-view view-title="{{sujet}}">
     <ion-content>
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="search" placeholder="Search"  ng-model="searchText">
+        </label>
+
         <ion-list>
-            <ion-item ng-repeat="playlist in playlists" href="#/app/playlists/{{playlist.id}}/{{sujet}}">
-                {{playlist.title}}
+            <ion-item ng-repeat="playlist in playlists | filter:searchText" href="#/app/playlists/{{playlist.id}}/{{sujet}}/{{playlist.title}}">
+                {{playlist.title | capitalize}}
             </ion-item>
         </ion-list>
     </ion-content>

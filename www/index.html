@@ -14,6 +14,13 @@
 
         <!-- ionic/angularjs js -->
         <script src="lib/ionic/js/ionic.bundle.js"></script>
+        
+        <!-- moment.js see http://momentjs.com/-->
+        <script src="lib/moment/moment-with-locales.js"></script>
+        <script language="javascript">
+            var userLang = navigator.language || navigator.userLanguage;
+            moment.locale(userLang);
+        </script>
 
         <!-- cordova script (this will be a 404 during development) -->
         <script src="cordova.js"></script>
@@ -25,6 +32,7 @@
         <script src="js/directives.js"></script>
         <script src="js/factories.js"></script>
         <script src="js/services.js"></script>
+        <script src="js/filters.js"></script>
         <script src="components/audioPlayer/component.js"></script>
     </head>
 

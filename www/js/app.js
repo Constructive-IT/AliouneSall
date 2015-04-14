@@ -58,7 +58,7 @@ angular.module('aliounesall', ['ionic', 'aliounesall.controllers', 'aliounesall.
     })
 
   .state('app.single', {
-    url: "/playlists/:playlistId/:sujet",
+    url: "/playlists/:playlistId/:sujet/:playlistName",
     views: {
       'menuContent': {
         templateUrl: "templates/playlist.html",

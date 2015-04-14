@@ -1,20 +1,42 @@
-angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', 'aliounesall.factories', 'aliounesall.directives', 'aliounesall.modules'])
+angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', 'aliounesall.factories', 'aliounesall.directives', 'aliounesall.modules', 'aliounesall.filters'])
 
-.controller('AppCtrl', function ($scope, $ionicModal, $timeout, $localstorage) {
+.controller('AppCtrl', function ($scope, $ionicModal, $timeout,$filter, $localstorage) {
 
-    var wfObj = [
-      { title: 'Regguuae', id: 1 },
-      { title: 'Chill', id: 2 },
-      { title: 'Dubstep', id: 3 },
-      { title: 'Indie', id: 4 },
-      { title: 'Rap', id: 5 },
-      { title: 'Cowbell', id: 6 }
-    ];
+    var wfObj = [];
 
-    $localstorage.setObject("WaktaanuFajar", wfObj);
+    var years = [2010, 2011, 2012, 2013, 2014, 2015];
+    var months = moment.months();
+    var todayMonthYear = moment().format("MYYYY");
+    for (var i = 0; i < years.length; i++) {
 
+        for (var j = 1; j < months.length; j++) {
+            var id = j + "" + years[i];
+            if (id === todayMonthYear) {
+                break;
+            }
+            wfObj.push({ title: months[j] + " - " + years[i], id: id });
+
+        }
+    }
+
+    wfObj.reverse();
+
+    var lastUpdate = $localstorage.getObject("LastUpdate");
+    //var today = $filter('date')(new Date(), 'yyyy-MM-dd');
+    var today = moment().format("L");
     
-  // Form data for the login modal
+
+
+    //if (lastUpdate == '{}' || lastUpdate != today) {
+        $localstorage.setObject("WaktaanuFajar", wfObj);
+
+        $localstorage.setObject("Tafsir", wfObj);
+
+        $localstorage.setObject("LastUpdate", today);
+    //}
+
+
+// Form data for the login modal
   $scope.loginData = {};
 
   // Create the login modal that we will use later
@@ -53,12 +75,8 @@ angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', '
 
 .controller('PlaylistsCtrl', function ($scope, $stateParams, $localstorage, songFactory, enums) {
     $scope.sujet = $stateParams.sujet;
-
+    $scope.searchText = "";
     $scope.playlists = $scope.getPlaylist($scope.sujet);
-
-
-
-
 
 })
 
@@ -67,8 +85,9 @@ angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', '
     angular.extend($scope, {
         enums: enums,
         songs: songFactory,
-        param: $stateParams.playlistId,
+        playlistId: $stateParams.playlistId,
         sujet: $stateParams.sujet,
+        playlistName: $stateParams.playlistName,
         currentSong: "",
     });
 
@@ -78,95 +97,4 @@ angular.module('aliounesall.controllers', ['ionic', 'aliounesall.controllers', '
 
     };
 
-    //setPlayStatus(enums.state.ready);
-
-    //$scope.playPause = function() {
-    //    if ($scope.status == enums.state.playing || $scope.status == enums.state.paused) {
-    //        if (this.player.paused) {
-    //            this.player.play();
-    //            setPlayStatus(enums.state.playing);
-    //        } else {
-    //            this.player.pause();
-    //            setPlayStatus(enums.state.paused);
-    //        }
-    //    }
-    //};
-
-    ////triggered by ngChange to update audio.currentTime
-    //$scope.seeked = function () {
-    //    $scope.player.currentTime = this.data.currentTime;
-    //};
-
-    //$scope.updateUI = function (seek, max) {
-    //    $scope.data.duration = max;
-    //    $scope.data.currentTime = seek;
-    //};
-
-    //$scope.player.ontimeupdate = function (t) {
-    //    if ($scope.status === enums.state.playing) {
-
-    //        var seek = $scope.player.currentTime;
-    //       var max =  $scope.player.duration;
-
-    //        //did a little change here by using $timeout         
-    //        $timeout(function () {
-    //            $scope.updateUI(seek, max);
-    //        }, 0);
-
-          
-    //    }
-    //};
-
-    //$scope.player.oncanplay = function (e) {
-    //    $ionicLoading.hide();
-    //};
-
-    //$scope.player.onerror = function () {
-    //    $ionicLoading.hide();
-    //    $ionicLoading.show({
-    //        template: "Error! Something went wrong",
-    //        duration: 1000
-    //    });
-    //    setPlayStatus(enums.state.stopped);
-    //};
-
-
-
-    //function setPlayStatus(status) {
-    //    return $scope.status = status;
-    //};
-
-    //$scope.setVolume = function (value) {
-    //    $scope.player.volume = value;
-    //};
-
-
-    //$scope.play = function (song) {
-    //    $ionicLoading.show({
-    //        template: "Loading..."
-    //    });
-
-    //    $scope.player.src = song;
-    //    $scope.player.play();
-        
-    //    setPlayStatus(enums.state.playing);
-    //};
-
-    //$scope.pause = function () {
-    //    if ($scope.status === enums.state.playing) {
-
-    //        $scope.player.pause();
-    //        setPlayStatus(enums.state.paused);
-    //    }
-    //};
-
-    //$scope.stop = function () {
-    //    if ($scope.status === enums.state.playing) {
-
-    //        $scope.player.pause();
-    //        $scope.player.currentTime = 0;
-    //        $scope.data.currentTime = 0;
-    //        setPlayStatus(enums.state.stopped);
-    //    }      
-    //};
 });

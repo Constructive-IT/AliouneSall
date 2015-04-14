@@ -36,7 +36,7 @@
                 tracks: [
                     {
                         name: 'piano',
-                        url: 'files/dontstopmenow/piano.mp3',
+                        url: 'http://www.constructive-it.com/media/aliounesall/tafsir/042015/01.mp3',
                     },
                     {
                         name: 'bass',
